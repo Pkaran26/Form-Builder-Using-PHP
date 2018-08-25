@@ -4,6 +4,13 @@
         private $tableInfo = array();
         private $fields = array();
         private $ob;
+        private $dt = array(
+            'varchar'=>'text',
+            'int' => "number",
+            'date' => 'date',
+            'datetime' => 'datetime-local',
+            'char' => 'text'
+        );
         function __construct(){
             $this->ob = new Connection();
             array_push($this->tableInfo, $this->ob->getTableInfo());
@@ -31,11 +38,10 @@
         }
 
         function replaceDatatype($type){
-            $dt = array('varchar'=>'text', 'int' => "number", 'date' => 'date');
-            if (array_key_exists($type, $dt)){
-                return $dt[$type];
+            if (array_key_exists($type, $this->dt)){
+                return $this->dt[$type];
             }else{
-                $dt['varchar'];
+                $this->dt['varchar'];
             }
         }
         function getFields(){
